@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" %>
+    <%= javascript_include_tag "path"%>
+    <%= javascript_include_tag "routes" %>
+    <%= csrf_meta_tag %>
+    <%= yield(:head) %>
+  </head>
+  <body>
+    <div id="container">
+      <% flash.each do |name, msg| %>
+        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+      <% end %>
+      <% @users.each do |user| %>
+        <%= link_to user.username, "#!/#{user.username}" %>
+      <% end %>
+      <div id="ajax-content">
+      </div>
+      <%= yield %>
+    </div>
+    <script type="text/javascript" language="javascript" charset="utf-8">
+      $(function(){
+          Path.listen();
+      });
+    </script>
+  </body>
+</html>
